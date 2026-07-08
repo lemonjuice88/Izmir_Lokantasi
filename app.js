@@ -46,7 +46,7 @@ const menuData = [
     icon: "flame-outline",
     items: [
       { name: { tr: "Döner", en: "Doner" }, cals: 320, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}, {tr:"1,5 P.",en:"1.5 P."}] },
-      { name: { tr: "İskender", en: "Iskender Kebab" }, image: "https://images.unsplash.com/photo-1633321702518-7feccafb94d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80", cals: 850, gluten: "var", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}, {tr:"1,5 P.",en:"1.5 P."}] },
+      { name: { tr: "İskender", en: "Iskender Kebab" }, image: "Images/iskender.png", cals: 850, gluten: "var", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}, {tr:"1,5 P.",en:"1.5 P."}] },
       { name: { tr: "Adana", en: "Adana Kebab (Spicy)" }, cals: 420, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}, {tr:"1,5 P.",en:"1.5 P."}] },
       { name: { tr: "Urfa", en: "Urfa Kebab (Mild)" }, cals: 400, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}, {tr:"1,5 P.",en:"1.5 P."}] },
       { name: { tr: "Beyti", en: "Beyti Kebab" }, cals: 650, gluten: "var", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}, {tr:"1,5 P.",en:"1.5 P."}] },
@@ -87,7 +87,7 @@ const menuData = [
       { name: { tr: "Kuşbaşılı Pide", en: "Pita with Diced Meat" }, cals: 730, gluten: "var", options: [{tr:"1 P.",en:"1 P."}, {tr:"1,5 P.",en:"1.5 P."}] },
       { name: { tr: "Sucuklu Pide", en: "Pita with Turkish Sausage" }, cals: 760, gluten: "var", options: [{tr:"1 P.",en:"1 P."}, {tr:"1,5 P.",en:"1.5 P."}] },
       { name: { tr: "Karışık Pide", en: "Mixed Pita" }, cals: 850, gluten: "var", options: [{tr:"1 P.",en:"1 P."}, {tr:"1,5 P.",en:"1.5 P."}] },
-      { name: { tr: "Lahmacun", en: "Lahmacun" }, image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80", cals: 380, gluten: "var", options: [{tr:"1 P.",en:"1 P."}, {tr:"1,5 P.",en:"1.5 P."}] }
+      { name: { tr: "Lahmacun", en: "Lahmacun" }, cals: 380, gluten: "var", options: [{tr:"1 P.",en:"1 P."}, {tr:"1,5 P.",en:"1.5 P."}] }
     ]
   },
   {
@@ -170,15 +170,31 @@ document.addEventListener('DOMContentLoaded', () => {
             const delay = itemIndex * 0.05;
             const itemName = item.name[currentLang];
             
-            let imageHTML = '';
-            if (item.image) {
-                imageHTML = `<img src="${item.image}" alt="${itemName}" class="item-image" loading="lazy">`;
-            } else {
-                imageHTML = `
-                <div class="item-icon-placeholder">
+            // Resim dosya adını otomatik oluştur (Türkçe karakterleri ve boşlukları düzelt)
+            // Örn: "Tavuk Şiş" -> "tavuk_sis"
+            let baseName = item.name.tr
+                .replace(/İ/g, 'i').replace(/I/g, 'i').replace(/ı/g, 'i')
+                .replace(/Ğ/g, 'g').replace(/ğ/g, 'g')
+                .replace(/Ü/g, 'u').replace(/ü/g, 'u')
+                .replace(/Ş/g, 's').replace(/ş/g, 's')
+                .replace(/Ö/g, 'o').replace(/ö/g, 'o')
+                .replace(/Ç/g, 'c').replace(/ç/g, 'c')
+                .toLowerCase()
+                .replace(/\s+/g, '_')
+                .replace(/[^a-z0-9_]/g, '');
+
+            // Eğer özel resim yolu belirtilmişse onu kullan, yoksa otomatik oluşturulanı dene
+            const imagePath = item.image || `Images/${baseName}.png`;
+            const fallbackId = `fallback-${index}-${itemIndex}`;
+            
+            // Resmi yüklemeyi dene, eğer klasörde yoksa (hata verirse) ikonu göster
+            let imageHTML = `
+                <img src="${imagePath}" alt="${itemName}" class="item-image" 
+                     onerror="this.style.display='none'; document.getElementById('${fallbackId}').style.display='flex';" 
+                     loading="lazy">
+                <div class="item-icon-placeholder" id="${fallbackId}" style="display: none;">
                     <ion-icon name="${catData.icon}"></ion-icon>
                 </div>`;
-            }
 
             let badgesHTML = '';
             if (item.cals !== undefined || item.gluten) {
