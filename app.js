@@ -1,4 +1,4 @@
-const currentLang = localStorage.getItem('lang') || 'tr';
+let currentLang = localStorage.getItem('lang') || 'tr';
 
 const translations = {
     tr: {
@@ -22,128 +22,152 @@ const translations = {
         gf: "Gluten-Free",
         gv: "Contains Gluten",
         gvVar: "May Vary"
+    },
+    ar: {
+        pageTitle: "مطعم إزمير - القائمة",
+        subtitle: "نكهات تقليدية",
+        backHome: "الرئيسية",
+        pricePlaceholder: "₺ -",
+        footer: "مطعم إزمير",
+        cal: "سعرة",
+        gf: "خالي من الجلوتين",
+        gv: "يحتوي على الجلوتين",
+        gvVar: "قد يختلف"
     }
 };
 
 const menuData = [
   {
-    category: { tr: "Çorbalar", en: "Soups" },
+    category: { tr: "Çorbalar", en: "Soups", ar: "الحساء" },
     icon: "cafe-outline",
     items: [
-      { name: { tr: "İşkembe", en: "Tripe Soup" }, image: "Images/işkembe.png", cals: 190, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}] },
-      { name: { tr: "Dil Paça", en: "Tongue & Trotter Soup" }, image: "Images/dil_paca.png", cals: 220, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}] },
-      { name: { tr: "Kelle Paça", en: "Head & Trotter Soup" }, image: "Images/kelle_paca.png", cals: 250, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}] },
-      { name: { tr: "Ekmekli Paça", en: "Trotter Soup with Bread" }, image: "Images/ekmekli_paca.png", cals: 380, gluten: "var", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}] },
-      { name: { tr: "Beykoz", en: "Beykoz Soup" }, image: "Images/beykoz.png", cals: 240, gluten: "degisken", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}] },
-      { name: { tr: "Tuzlama", en: "Salted Tripe Soup" }, image: "Images/tuzlama.png", cals: 240, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}] },
-      { name: { tr: "Mercimek", en: "Lentil Soup" }, image: "Images/mercimek.png", cals: 180, gluten: "degisken", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}] },
-      { name: { tr: "Ezogelin", en: "Ezogelin Soup" }, image: "Images/ezogelin.png", cals: 190, gluten: "var", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}] },
-      { name: { tr: "Tavuk Suyu", en: "Chicken Broth Soup" }, image: "Images/tavuk_suyu.png", cals: 120, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}] }
+      { name: { tr: "İşkembe", en: "Tripe Soup", ar: "شوربة كرشة" }, image: "Images/işkembe.png", cals: 190, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
+      { name: { tr: "Dil Paça", en: "Tongue & Trotter Soup", ar: "شوربة لسان وكوارع" }, image: "Images/dil_paca.png", cals: 220, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
+      { name: { tr: "Kelle Paça", en: "Head & Trotter Soup", ar: "شوربة رأس وكوارع" }, image: "Images/kelle_paca.png", cals: 250, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
+      { name: { tr: "Ekmekli Paça", en: "Trotter Soup with Bread", ar: "شوربة كوارع بالخبز" }, image: "Images/ekmekli_paca.png", cals: 380, gluten: "var", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
+      { name: { tr: "Beykoz", en: "Beykoz Soup", ar: "شوربة بيكوز" }, image: "Images/beykoz.png", cals: 240, gluten: "degisken", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
+      { name: { tr: "Tuzlama", en: "Salted Tripe Soup", ar: "شوربة كرشة مملحة" }, image: "Images/tuzlama.png", cals: 240, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
+      { name: { tr: "Mercimek", en: "Lentil Soup", ar: "شوربة عدس" }, image: "Images/mercimek.png", cals: 180, gluten: "degisken", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
+      { name: { tr: "Ezogelin", en: "Ezogelin Soup", ar: "شوربة إيزوغلين" }, image: "Images/ezogelin.png", cals: 190, gluten: "var", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
+      { name: { tr: "Tavuk Suyu", en: "Chicken Broth Soup", ar: "شوربة دجاج" }, image: "Images/tavuk_suyu.png", cals: 120, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] }
     ]
   },
   {
-    category: { tr: "Kebaplar", en: "Kebabs" },
+    category: { tr: "Kebaplar", en: "Kebabs", ar: "مشويات" },
     icon: "flame-outline",
     items: [
-      { name: { tr: "Döner", en: "Doner" }, cals: 320, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}, {tr:"1,5 P.",en:"1.5 P."}] },
-      { name: { tr: "İskender", en: "Iskender Kebab" }, image: "Images/iskender.png", cals: 850, gluten: "var", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}, {tr:"1,5 P.",en:"1.5 P."}] },
-      { name: { tr: "Adana", en: "Adana Kebab (Spicy)" }, cals: 420, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}, {tr:"1,5 P.",en:"1.5 P."}] },
-      { name: { tr: "Urfa", en: "Urfa Kebab (Mild)" }, cals: 400, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}, {tr:"1,5 P.",en:"1.5 P."}] },
-      { name: { tr: "Beyti", en: "Beyti Kebab" }, cals: 650, gluten: "var", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}, {tr:"1,5 P.",en:"1.5 P."}] },
-      { name: { tr: "Yoğurtlu Adana", en: "Adana Kebab with Yogurt" }, cals: 500, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}, {tr:"1,5 P.",en:"1.5 P."}] },
-      { name: { tr: "Izgara Köfte", en: "Grilled Meatballs" }, cals: 380, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}, {tr:"1,5 P.",en:"1.5 P."}] },
-      { name: { tr: "Tavuk Şiş", en: "Chicken Shish" }, cals: 280, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}, {tr:"1,5 P.",en:"1.5 P."}] },
-      { name: { tr: "Çöp Şiş", en: "Small Meat Shish" }, cals: 320, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}, {tr:"1,5 P.",en:"1.5 P."}] },
-      { name: { tr: "Ciğer", en: "Liver Shish" }, cals: 330, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}, {tr:"1,5 P.",en:"1.5 P."}] },
-      { name: { tr: "Kaşarlı Kebap", en: "Kebab with Cheese" }, cals: 450, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}, {tr:"1,5 P.",en:"1.5 P."}] },
-      { name: { tr: "Karışık Izgara", en: "Mixed Grill" }, cals: 700, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}, {tr:"1,5 P.",en:"1.5 P."}] }
+      { name: { tr: "Döner", en: "Doner", ar: "شاورما لحم" }, cals: 320, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
+      { name: { tr: "İskender", en: "Iskender Kebab", ar: "إسكندر كباب" }, cals: 850, gluten: "var", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
+      { name: { tr: "Adana", en: "Adana Kebab (Spicy)", ar: "كباب أضنة" }, cals: 420, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
+      { name: { tr: "Urfa", en: "Urfa Kebab (Mild)", ar: "كباب أورفا" }, cals: 400, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
+      { name: { tr: "Beyti", en: "Beyti Kebab", ar: "كباب بيتي" }, cals: 650, gluten: "var", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
+      { name: { tr: "Yoğurtlu Adana", en: "Adana Kebab with Yogurt", ar: "كباب أضنة بالزبادي" }, cals: 500, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
+      { name: { tr: "Izgara Köfte", en: "Grilled Meatballs", ar: "كفتة مشوية" }, cals: 380, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
+      { name: { tr: "Tavuk Şiş", en: "Chicken Shish", ar: "شيش طاووق" }, cals: 280, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
+      { name: { tr: "Çöp Şiş", en: "Small Meat Shish", ar: "تشوب شيش (لحم صغير)" }, cals: 320, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
+      { name: { tr: "Ciğer", en: "Liver Shish", ar: "شيش كبدة" }, cals: 330, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
+      { name: { tr: "Kaşarlı Kebap", en: "Kebab with Cheese", ar: "كباب بالجبن" }, cals: 450, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
+      { name: { tr: "Karışık Izgara", en: "Mixed Grill", ar: "مشاوي مشكلة" }, cals: 700, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] }
     ]
   },
   {
-    category: { tr: "Yemekler", en: "Main Dishes" },
+    category: { tr: "Yemekler", en: "Main Dishes", ar: "أطباق رئيسية" },
     icon: "restaurant-outline",
     items: [
-      { name: { tr: "Tas Kebap", en: "Meat Stew" }, cals: 420, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}] },
-      { name: { tr: "Orman Kebabı", en: "Forest Kebab" }, cals: 430, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}] },
-      { name: { tr: "Sebzeli Kebap", en: "Vegetable Kebab" }, cals: 350, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}] },
-      { name: { tr: "Patlıcan Kebabı", en: "Eggplant Kebab" }, cals: 520, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}] },
-      { name: { tr: "Et Sote", en: "Sautéed Meat" }, cals: 400, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}] },
-      { name: { tr: "Kuzu Haşlama", en: "Boiled Lamb" }, cals: 450, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}] },
-      { name: { tr: "Patlıcan Musakka", en: "Eggplant Moussaka" }, cals: 430, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}] },
-      { name: { tr: "Tavuk Roti", en: "Roasted Chicken" }, cals: 320, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}] },
-      { name: { tr: "Kuru Fasulye", en: "White Bean Stew" }, cals: 350, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}] },
-      { name: { tr: "Sebze Yemeği", en: "Vegetable Dish" }, cals: 220, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}] },
-      { name: { tr: "İzmir Köfte", en: "Izmir Meatballs" }, cals: 450, gluten: "degisken", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}] },
-      { name: { tr: "Güveç", en: "Casserole" }, cals: 480, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}] },
-      { name: { tr: "Pilav", en: "Rice Pilaf" }, cals: 480, gluten: "yok", options: [{tr:"TAM",en:"FULL"}, {tr:"AZ",en:"SMALL"}] }
+      { name: { tr: "Tas Kebap", en: "Meat Stew", ar: "طاس كباب" }, cals: 420, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
+      { name: { tr: "Orman Kebabı", en: "Forest Kebab", ar: "كباب الغابة" }, cals: 430, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
+      { name: { tr: "Sebzeli Kebap", en: "Vegetable Kebab", ar: "كباب بالخضار" }, cals: 350, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
+      { name: { tr: "Patlıcan Kebabı", en: "Eggplant Kebab", ar: "كباب بالباذنجان" }, cals: 520, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
+      { name: { tr: "Et Sote", en: "Sautéed Meat", ar: "لحم سوتيه" }, cals: 400, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
+      { name: { tr: "Kuzu Haşlama", en: "Boiled Lamb", ar: "لحم ضأن مسلوق" }, cals: 450, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
+      { name: { tr: "Patlıcan Musakka", en: "Eggplant Moussaka", ar: "مسقعة باذنجان" }, cals: 430, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
+      { name: { tr: "Tavuk Roti", en: "Roasted Chicken", ar: "دجاج مشوي" }, cals: 320, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
+      { name: { tr: "Kuru Fasulye", en: "White Bean Stew", ar: "فاصوليا بيضاء" }, cals: 350, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
+      { name: { tr: "Sebze Yemeği", en: "Vegetable Dish", ar: "طبق خضار" }, cals: 220, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
+      { name: { tr: "İzmir Köfte", en: "Izmir Meatballs", ar: "كفتة إزمير" }, cals: 450, gluten: "degisken", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
+      { name: { tr: "Güveç", en: "Casserole", ar: "طاجن" }, cals: 480, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
+      { name: { tr: "Pilav", en: "Rice Pilaf", ar: "أرز بيلاف" }, cals: 480, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] }
     ]
   },
   {
-    category: { tr: "Pideler", en: "Pitas" },
+    category: { tr: "Pideler", en: "Pitas", ar: "فطائر بيدا" },
     icon: "pizza-outline",
     items: [
-      { name: { tr: "Kaşarlı Pide", en: "Pita with Cheese" }, cals: 650, gluten: "var", options: [{tr:"1 P.",en:"1 P."}, {tr:"1,5 P.",en:"1.5 P."}] },
-      { name: { tr: "Kıymalı Pide", en: "Pita with Minced Meat" }, cals: 700, gluten: "var", options: [{tr:"1 P.",en:"1 P."}, {tr:"1,5 P.",en:"1.5 P."}] },
-      { name: { tr: "Kuşbaşılı Pide", en: "Pita with Diced Meat" }, cals: 730, gluten: "var", options: [{tr:"1 P.",en:"1 P."}, {tr:"1,5 P.",en:"1.5 P."}] },
-      { name: { tr: "Sucuklu Pide", en: "Pita with Turkish Sausage" }, cals: 760, gluten: "var", options: [{tr:"1 P.",en:"1 P."}, {tr:"1,5 P.",en:"1.5 P."}] },
-      { name: { tr: "Karışık Pide", en: "Mixed Pita" }, cals: 850, gluten: "var", options: [{tr:"1 P.",en:"1 P."}, {tr:"1,5 P.",en:"1.5 P."}] },
-      { name: { tr: "Lahmacun", en: "Lahmacun" }, cals: 380, gluten: "var", options: [{tr:"1 P.",en:"1 P."}, {tr:"1,5 P.",en:"1.5 P."}] }
+      { name: { tr: "Kaşarlı Pide", en: "Pita with Cheese", ar: "بيدا بالجبن" }, cals: 650, gluten: "var", options: [{tr:"1 P.",en:"1 P.",ar:"1 حصة"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
+      { name: { tr: "Kıymalı Pide", en: "Pita with Minced Meat", ar: "بيدا باللحم المفروم" }, cals: 700, gluten: "var", options: [{tr:"1 P.",en:"1 P.",ar:"1 حصة"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
+      { name: { tr: "Kuşbaşılı Pide", en: "Pita with Diced Meat", ar: "بيدا بقطع اللحم" }, cals: 730, gluten: "var", options: [{tr:"1 P.",en:"1 P.",ar:"1 حصة"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
+      { name: { tr: "Sucuklu Pide", en: "Pita with Turkish Sausage", ar: "بيدا بالسجق" }, cals: 760, gluten: "var", options: [{tr:"1 P.",en:"1 P.",ar:"1 حصة"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
+      { name: { tr: "Karışık Pide", en: "Mixed Pita", ar: "بيدا مشكلة" }, cals: 850, gluten: "var", options: [{tr:"1 P.",en:"1 P.",ar:"1 حصة"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
+      { name: { tr: "Lahmacun", en: "Lahmacun", ar: "لحم بعجين" }, cals: 380, gluten: "var", options: [{tr:"1 P.",en:"1 P.",ar:"1 حصة"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] }
     ]
   },
   {
-    category: { tr: "Döner", en: "Doner" },
+    category: { tr: "Döner", en: "Doner", ar: "شاورما لحم" },
     icon: "fast-food-outline",
     items: [
-      { name: { tr: "Döner Dürüm", en: "Doner Wrap" }, cals: 650, gluten: "var", options: [] },
-      { name: { tr: "Yarım Ekmek Döner", en: "Doner in Half Bread" }, cals: 550, gluten: "var", options: [] },
-      { name: { tr: "Kuzu Tandır", en: "Tandoori Lamb" }, cals: 720, gluten: "yok", options: [] }
+      { name: { tr: "Döner Dürüm", en: "Doner Wrap", ar: "ساندويتش شاورما" }, cals: 650, gluten: "var", options: [] },
+      { name: { tr: "Yarım Ekmek Döner", en: "Doner in Half Bread", ar: "شاورما في نصف خبزة" }, cals: 550, gluten: "var", options: [] },
+      { name: { tr: "Kuzu Tandır", en: "Tandoori Lamb", ar: "تندوري لحم ضأن" }, cals: 720, gluten: "yok", options: [] }
     ]
   },
   {
-    category: { tr: "Tatlılar", en: "Desserts" },
+    category: { tr: "Tatlılar", en: "Desserts", ar: "حلويات" },
     icon: "ice-cream-outline",
     items: [
-      { name: { tr: "Baklava", en: "Baklava" }, image: "https://images.unsplash.com/photo-1599317378772-2f3b97b0a708?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80", options: [] },
-      { name: { tr: "Tel Kadayıf", en: "Shredded Pastry" }, cals: 420, gluten: "var", options: [] },
-      { name: { tr: "Ekmek Kadayıfı", en: "Bread Pastry" }, cals: 500, gluten: "var", options: [] },
-      { name: { tr: "Sütlaç", en: "Rice Pudding" }, cals: 240, gluten: "yok", options: [] },
-      { name: { tr: "Kabak Tatlısı", en: "Pumpkin Dessert" }, cals: 280, gluten: "degisken", options: [] }
+      { name: { tr: "Baklava", en: "Baklava", ar: "بقلاوة" }, options: [] },
+      { name: { tr: "Tel Kadayıf", en: "Shredded Pastry", ar: "كاداييف" }, cals: 420, gluten: "var", options: [] },
+      { name: { tr: "Ekmek Kadayıfı", en: "Bread Pastry", ar: "حلوى الخبز" }, cals: 500, gluten: "var", options: [] },
+      { name: { tr: "Sütlaç", en: "Rice Pudding", ar: "مهلبية أرز" }, cals: 240, gluten: "yok", options: [] },
+      { name: { tr: "Kabak Tatlısı", en: "Pumpkin Dessert", ar: "حلوى اليقطين" }, cals: 280, gluten: "degisken", options: [] }
     ]
   },
   {
-    category: { tr: "İçecekler", en: "Beverages" },
+    category: { tr: "İçecekler", en: "Beverages", ar: "مشروبات" },
     icon: "water-outline",
     items: [
-      { name: { tr: "Kola", en: "Cola" }, cals: 139, gluten: "yok", options: [] },
-      { name: { tr: "Yedigün", en: "Orange Soda" }, cals: 140, gluten: "yok", options: [] },
-      { name: { tr: "Fanta", en: "Fanta" }, cals: 140, gluten: "yok", options: [] },
-      { name: { tr: "Şalgam", en: "Turnip Juice" }, cals: 15, gluten: "yok", options: [] },
-      { name: { tr: "M. Suyu", en: "Fruit Juice" }, cals: 120, gluten: "yok", options: [] },
-      { name: { tr: "Soda", en: "Mineral Water" }, cals: 0, gluten: "yok", options: [] },
-      { name: { tr: "Ayran", en: "Ayran" }, cals: 75, gluten: "yok", options: [] },
-      { name: { tr: "Su", en: "Water" }, cals: 0, gluten: "yok", options: [] }
+      { name: { tr: "Kola", en: "Cola", ar: "كولا" }, cals: 139, gluten: "yok", options: [] },
+      { name: { tr: "Yedigün", en: "Orange Soda", ar: "صودا برتقال" }, cals: 140, gluten: "yok", options: [] },
+      { name: { tr: "Fanta", en: "Fanta", ar: "فانتا" }, cals: 140, gluten: "yok", options: [] },
+      { name: { tr: "Şalgam", en: "Turnip Juice", ar: "عصير لفت" }, cals: 15, gluten: "yok", options: [] },
+      { name: { tr: "Meyve Suyu", en: "Fruit Juice", ar: "عصير فواكه" }, cals: 120, gluten: "yok", options: [] },
+      { name: { tr: "Soda", en: "Mineral Water", ar: "مياه معدنية" }, cals: 0, gluten: "yok", options: [] },
+      { name: { tr: "Ayran", en: "Ayran", ar: "عيران" }, cals: 75, gluten: "yok", options: [] },
+      { name: { tr: "Su", en: "Water", ar: "ماء" }, cals: 0, gluten: "yok", options: [] }
     ]
   },
   {
-    category: { tr: "Dolap Malzemeleri", en: "Fridge Items" },
+    category: { tr: "Yan Ürünler", en: "Side Dishes", ar: "أطباق جانبية" },
     icon: "snow-outline",
     items: [
-      { name: { tr: "Salata", en: "Salad" }, options: [] },
-      { name: { tr: "Yoğurt", en: "Yogurt" }, options: [] },
-      { name: { tr: "Cacık", en: "Tzatziki" }, options: [] }
+      { name: { tr: "Salata", en: "Salad", ar: "سلطة" }, options: [] },
+      { name: { tr: "Yoğurt", en: "Yogurt", ar: "زبادي" }, options: [] },
+      { name: { tr: "Cacık", en: "Tzatziki", ar: "جاجيك" }, options: [] }
     ]
   }
 ];
 
-document.addEventListener('DOMContentLoaded', () => {
+let scrollListener = null;
+
+function renderMenu() {
     // Statik Metinleri Çevir
     document.documentElement.lang = currentLang;
-    document.getElementById('page-title').textContent = translations[currentLang].pageTitle;
-    document.getElementById('back-home-text').textContent = translations[currentLang].backHome;
-    document.getElementById('footer-text').textContent = translations[currentLang].footer;
+    
+    const pageTitle = document.getElementById('page-title');
+    if (pageTitle) pageTitle.textContent = translations[currentLang].pageTitle;
+    
+    const backHome = document.getElementById('back-home-text');
+    if (backHome) backHome.textContent = translations[currentLang].backHome;
+    
+    const footerText = document.getElementById('footer-text');
+    if (footerText) footerText.textContent = translations[currentLang].footer;
 
     const navContainer = document.getElementById('categoryNav');
     const menuContainer = document.getElementById('menuContainer');
+    
+    if (!navContainer || !menuContainer) return; // Not on menu page
+
+    navContainer.innerHTML = '';
+    menuContainer.innerHTML = '';
 
     menuData.forEach((catData, index) => {
         const catName = catData.category[currentLang];
@@ -171,7 +195,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const itemName = item.name[currentLang];
             
             // Resim dosya adını otomatik oluştur (Türkçe karakterleri ve boşlukları düzelt)
-            // Örn: "Tavuk Şiş" -> "tavuk_sis"
             let baseName = item.name.tr
                 .replace(/İ/g, 'i').replace(/I/g, 'i').replace(/ı/g, 'i')
                 .replace(/Ğ/g, 'g').replace(/ğ/g, 'g')
@@ -183,11 +206,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 .replace(/\s+/g, '_')
                 .replace(/[^a-z0-9_]/g, '');
 
-            // Eğer özel resim yolu belirtilmişse onu kullan, yoksa otomatik oluşturulanı dene
             const imagePath = item.image || `Images/${baseName}.png`;
             const fallbackId = `fallback-${index}-${itemIndex}`;
             
-            // Resmi yüklemeyi dene, eğer klasörde yoksa (hata verirse) ikonu göster
             let imageHTML = `
                 <img src="${imagePath}" alt="${itemName}" class="item-image" 
                      onerror="this.style.display='none'; document.getElementById('${fallbackId}').style.display='flex';" 
@@ -225,7 +246,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 pricesHTML += '</div>';
             } else {
-                // Default single price
                 pricesHTML = `<div class="item-price">${translations[currentLang].pricePlaceholder}</div>`;
             }
 
@@ -248,10 +268,18 @@ document.addEventListener('DOMContentLoaded', () => {
         menuContainer.appendChild(section);
     });
 
+    setupScrollSpy();
+}
+
+function setupScrollSpy() {
     const sections = document.querySelectorAll('.category-section');
     const navButtons = document.querySelectorAll('.category-btn');
 
-    window.addEventListener('scroll', () => {
+    if (scrollListener) {
+        window.removeEventListener('scroll', scrollListener);
+    }
+
+    scrollListener = () => {
         let current = '';
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
@@ -260,7 +288,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Sayfanın en altına inildiyse otomatik olarak son kategoriyi aktif yap
         if ((window.innerHeight + Math.ceil(window.pageYOffset)) >= document.body.offsetHeight - 10) {
             current = sections[sections.length - 1].getAttribute('id');
         }
@@ -272,8 +299,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             }
         });
-    });
-});
+    };
+
+    window.addEventListener('scroll', scrollListener);
+}
 
 function scrollToCategory(index) {
     const section = document.getElementById(`category-${index}`);
@@ -281,3 +310,32 @@ function scrollToCategory(index) {
     const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
     window.scrollTo({top: y, behavior: 'smooth'});
 }
+
+function setLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('lang', lang);
+    
+    // Update active button classes
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    const activeBtn = document.getElementById(`btn-${lang}`);
+    if (activeBtn) activeBtn.classList.add('active');
+
+    renderMenu();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Initial active button
+    const activeBtn = document.getElementById(`btn-${currentLang}`);
+    if (activeBtn) activeBtn.classList.add('active');
+
+    // Language buttons
+    const btnTr = document.getElementById('btn-tr');
+    const btnEn = document.getElementById('btn-en');
+    const btnAr = document.getElementById('btn-ar');
+
+    if (btnTr) btnTr.addEventListener('click', () => setLanguage('tr'));
+    if (btnEn) btnEn.addEventListener('click', () => setLanguage('en'));
+    if (btnAr) btnAr.addEventListener('click', () => setLanguage('ar'));
+
+    renderMenu();
+});

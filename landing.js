@@ -8,9 +8,9 @@ const langData = {
         aboutTitle: "Hakkımızda",
         aboutText: "İzmir Lokantası, yılların tecrübesiyle geleneksel Türk mutfağının en seçkin lezzetlerini sizlere sunmaktan gurur duyar. Taze malzemeler, ustalık ve sevgiyle hazırlanan her tabağımızda kültürümüzün zenginliğini hissedeceksiniz.",
         contactTitle: "İletişim",
-        address: "Atatürk Caddesi No: 123, Konak / İzmir",
+        address: "Üçtutlar, Camikebir Sk. No:3, 19030 Çorum Merkez/Çorum",
         hoursTitle: "Çalışma Saatleri",
-        hoursText: "Her gün: 10:00 - 23:00",
+        hoursText: "Her gün: 05:00 - 20:30",
         footerName: "İzmir Lokantası"
     },
     en: {
@@ -22,10 +22,24 @@ const langData = {
         aboutTitle: "About Us",
         aboutText: "Izmir Restaurant is proud to present the most exquisite flavors of traditional Turkish cuisine with years of experience. You will feel the richness of our culture in every plate prepared with fresh ingredients, mastery, and love.",
         contactTitle: "Contact Us",
-        address: "Ataturk Avenue No: 123, Konak / Izmir",
+        address: "Uctutlar, Camikebir St. No:3, 19030 Corum Center/Corum",
         hoursTitle: "Working Hours",
-        hoursText: "Every day: 10:00 AM - 11:00 PM",
+        hoursText: "Every day: 05:00 - 20:30",
         footerName: "Izmir Restaurant"
+    },
+    ar: {
+        title: "مطعم إزمير",
+        subtitle: "نكهات تقليدية",
+        btnMenu: "الذهاب إلى القائمة",
+        btnAbout: "معلومات عنا",
+        btnContact: "اتصل بنا",
+        aboutTitle: "معلومات عنا",
+        aboutText: "يفخر مطعم إزمير بتقديم أشهى النكهات من المطبخ التركي التقليدي بخبرة تمتد لسنوات. ستشعر بثراء ثقافتنا في كل طبق يتم إعداده بمكونات طازجة ومهارة وحب.",
+        contactTitle: "اتصل بنا",
+        address: "أوتشوتلار، شارع جاميكبير رقم: 3، 19030 مركز تشوروم / تشوروم",
+        hoursTitle: "ساعات العمل",
+        hoursText: "كل يوم: 05:00 - 20:30",
+        footerName: "مطعم إزمير"
     }
 };
 
@@ -36,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('btn-tr').addEventListener('click', () => setLanguage('tr'));
     document.getElementById('btn-en').addEventListener('click', () => setLanguage('en'));
+    document.getElementById('btn-ar').addEventListener('click', () => setLanguage('ar'));
 });
 
 function setLanguage(lang) {
