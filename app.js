@@ -54,7 +54,7 @@ const menuData = [
   },
   {
     category: { tr: "Kebaplar", en: "Kebabs", ar: "مشويات" },
-    icon: "flame-outline",
+    icon: "bonfire-outline",
     items: [
       { name: { tr: "Döner", en: "Doner", ar: "شاورما لحم" }, cals: 320, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
       { name: { tr: "İskender", en: "Iskender Kebab", ar: "إسكندر كباب" }, cals: 850, gluten: "var", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
@@ -103,7 +103,7 @@ const menuData = [
   },
   {
     category: { tr: "Döner", en: "Doner", ar: "شاورما لحم" },
-    icon: "fast-food-outline",
+    icon: "flame-outline",
     items: [
       { name: { tr: "Döner Dürüm", en: "Doner Wrap", ar: "ساندويتش شاورما" }, cals: 650, gluten: "var", options: [] },
       { name: { tr: "Yarım Ekmek Döner", en: "Doner in Half Bread", ar: "شاورما في نصف خبزة" }, cals: 550, gluten: "var", options: [] },
@@ -137,7 +137,7 @@ const menuData = [
   },
   {
     category: { tr: "Yan Ürünler", en: "Side Dishes", ar: "أطباق جانبية" },
-    icon: "snow-outline",
+    icon: "leaf-outline",
     items: [
       { name: { tr: "Salata", en: "Salad", ar: "سلطة" }, options: [] },
       { name: { tr: "Yoğurt", en: "Yogurt", ar: "زبادي" }, options: [] },
@@ -148,8 +148,107 @@ const menuData = [
 
 let scrollListener = null;
 
+async function loadExcelData() {
+    try {
+        const response = await fetch('gercek_menu_fiyatlari.xlsx');
+        if (!response.ok) return; 
+        const arrayBuffer = await response.arrayBuffer();
+        const data = new Uint8Array(arrayBuffer);
+        const workbook = XLSX.read(data, {type: 'array'});
+        
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+        const excelJson = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+
+        const categoryMap = {
+            "Döner Çeşitleri": "Döner",
+            "Dolap Malzemeleri": "Yan Ürünler"
+        };
+
+        excelJson.forEach(row => {
+            let catName = row['Kategori'];
+            if (!catName || catName.trim() === '') return;
+            catName = catName.trim();
+            if (categoryMap[catName]) catName = categoryMap[catName];
+
+            const itemName = row['Ürün Adı'] ? String(row['Ürün Adı']).trim() : '';
+            if (!itemName) return;
+
+            const cal = String(row['Kalori'] || '').trim();
+            const gluten = String(row['Gluten'] || '').trim();
+            const priceFull = String(row['Fiyat: TAM / 1 P. (TL)'] || '').trim();
+            const priceSmall = String(row['Fiyat: AZ (TL)'] || '').trim();
+            const price1_5 = String(row['Fiyat: 1,5 Porsiyon (TL)'] || '').trim();
+
+            let catData = menuData.find(c => c.category.tr === catName);
+            if (!catData) {
+                catData = {
+                    category: { tr: catName, en: catName, ar: catName },
+                    icon: "restaurant-outline",
+                    items: []
+                };
+                menuData.push(catData);
+            }
+
+            let itemData = catData.items.find(i => i.name.tr === itemName);
+            if (!itemData) {
+                itemData = {
+                    name: { tr: itemName, en: itemName, ar: itemName },
+                    options: []
+                };
+                catData.items.push(itemData);
+            }
+
+            if (cal && cal !== '-' && !isNaN(cal)) {
+                itemData.cals = parseInt(cal);
+            } else if (cal === '-') {
+                delete itemData.cals;
+            }
+
+            if (gluten === 'Gluten Yok') itemData.gluten = 'yok';
+            else if (gluten === 'Gluten Var') itemData.gluten = 'var';
+            else if (gluten === 'Değişebilir') itemData.gluten = 'degisken';
+            else if (gluten === '-') delete itemData.gluten;
+
+            const optionMappings = [
+                { match: ['TAM', '1 P.'], price: priceFull, tr: (catName === 'Pideler' || catName === 'Lahmacun') ? '1 P.' : 'TAM', en: (catName === 'Pideler' || catName === 'Lahmacun') ? '1 P.' : 'FULL', ar: (catName === 'Pideler' || catName === 'Lahmacun') ? '1 حصة' : 'كامل' },
+                { match: ['AZ'], price: priceSmall, tr: 'AZ', en: 'SMALL', ar: 'صغير' },
+                { match: ['1,5 P.'], price: price1_5, tr: '1,5 P.', en: '1.5 P.', ar: '1.5 حصة' }
+            ];
+
+            let finalOptions = itemData.options ? [...itemData.options] : [];
+
+            optionMappings.forEach(mapping => {
+                if (mapping.price) { 
+                    let existingOpt = finalOptions.find(opt => mapping.match.includes(opt.tr));
+                    if (existingOpt) {
+                        if (mapping.price === '-') {
+                            finalOptions = finalOptions.filter(opt => opt !== existingOpt);
+                        } else {
+                            existingOpt.price = mapping.price;
+                        }
+                    } else if (mapping.price !== '-') {
+                        finalOptions.push({ tr: mapping.tr, en: mapping.en, ar: mapping.ar, price: mapping.price });
+                    }
+                }
+            });
+
+            const sortOrder = { 'AZ': 1, 'TAM': 2, '1 P.': 2, '1,5 P.': 3 };
+            finalOptions.sort((a, b) => (sortOrder[a.tr] || 99) - (sortOrder[b.tr] || 99));
+
+            if (finalOptions.length === 1 && (catName === 'İçecekler' || catName === 'Yan Ürünler' || catName === 'Tatlılar' || catName === 'Döner')) {
+                itemData.options = [];
+                itemData.singlePrice = finalOptions[0].price;
+            } else {
+                itemData.options = finalOptions;
+            }
+        });
+    } catch (e) {
+        console.error("Excel yüklenirken hata:", e);
+    }
+}
+
 function renderMenu() {
-    // Statik Metinleri Çevir
     document.documentElement.lang = currentLang;
     
     const pageTitle = document.getElementById('page-title');
@@ -164,7 +263,7 @@ function renderMenu() {
     const navContainer = document.getElementById('categoryNav');
     const menuContainer = document.getElementById('menuContainer');
     
-    if (!navContainer || !menuContainer) return; // Not on menu page
+    if (!navContainer || !menuContainer) return; 
 
     navContainer.innerHTML = '';
     menuContainer.innerHTML = '';
@@ -194,7 +293,6 @@ function renderMenu() {
             const delay = itemIndex * 0.05;
             const itemName = item.name[currentLang];
             
-            // Resim dosya adını otomatik oluştur (Türkçe karakterleri ve boşlukları düzelt)
             let baseName = item.name.tr
                 .replace(/İ/g, 'i').replace(/I/g, 'i').replace(/ı/g, 'i')
                 .replace(/Ğ/g, 'g').replace(/ğ/g, 'g')
@@ -237,16 +335,18 @@ function renderMenu() {
             if (item.options && item.options.length > 0) {
                 pricesHTML += '<div class="price-options">';
                 item.options.forEach(opt => {
+                    let dispPrice = opt.price ? `₺ ${opt.price}` : translations[currentLang].pricePlaceholder;
                     pricesHTML += `
                         <div class="price-box">
                             <span class="price-label">${opt[currentLang]}</span>
-                            <span class="price-val">${translations[currentLang].pricePlaceholder}</span>
+                            <span class="price-val">${dispPrice}</span>
                         </div>
                     `;
                 });
                 pricesHTML += '</div>';
             } else {
-                pricesHTML = `<div class="item-price">${translations[currentLang].pricePlaceholder}</div>`;
+                let dispPrice = item.singlePrice ? `₺ ${item.singlePrice}` : translations[currentLang].pricePlaceholder;
+                pricesHTML = `<div class="item-price">${dispPrice}</div>`;
             }
 
             const card = document.createElement('div');
@@ -315,7 +415,6 @@ function setLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('lang', lang);
     
-    // Update active button classes
     document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
     const activeBtn = document.getElementById(`btn-${lang}`);
     if (activeBtn) activeBtn.classList.add('active');
@@ -323,12 +422,10 @@ function setLanguage(lang) {
     renderMenu();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Initial active button
+document.addEventListener('DOMContentLoaded', async () => {
     const activeBtn = document.getElementById(`btn-${currentLang}`);
     if (activeBtn) activeBtn.classList.add('active');
 
-    // Language buttons
     const btnTr = document.getElementById('btn-tr');
     const btnEn = document.getElementById('btn-en');
     const btnAr = document.getElementById('btn-ar');
@@ -337,5 +434,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnEn) btnEn.addEventListener('click', () => setLanguage('en'));
     if (btnAr) btnAr.addEventListener('click', () => setLanguage('ar'));
 
+    // Excel verisini yükle, ardından arayüzü render et
+    await loadExcelData();
     renderMenu();
 });
