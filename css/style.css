@@ -335,7 +335,6 @@ body {
     height: auto;
     object-fit: contain;
     margin: 40px auto 10px auto;
-    mix-blend-mode: multiply;
 }
 
 /* Language Switch for Menu */
