@@ -39,7 +39,7 @@ const translations = {
 const menuData = [
   {
     category: { tr: "Çorbalar", en: "Soups", ar: "الحساء" },
-    icon: "cafe-outline",
+    icon: "icons/corba_logo.png",
     items: [
       { name: { tr: "İşkembe", en: "Tripe Soup", ar: "شوربة كرشة" }, image: "Images/işkembe.png", cals: 190, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
       { name: { tr: "Dil Paça", en: "Tongue & Trotter Soup", ar: "شوربة لسان وكوارع" }, image: "Images/dil_paca.png", cals: 220, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
@@ -54,7 +54,7 @@ const menuData = [
   },
   {
     category: { tr: "Kebaplar", en: "Kebabs", ar: "مشويات" },
-    icon: "bonfire-outline",
+    icon: "icons/kebap_logo.png",
     items: [
       { name: { tr: "Döner", en: "Doner", ar: "شاورما لحم" }, cals: 320, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
       { name: { tr: "İskender", en: "Iskender Kebab", ar: "إسكندر كباب" }, cals: 850, gluten: "var", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
@@ -72,7 +72,7 @@ const menuData = [
   },
   {
     category: { tr: "Yemekler", en: "Main Dishes", ar: "أطباق رئيسية" },
-    icon: "restaurant-outline",
+    icon: "icons/yemek_logo.png",
     items: [
       { name: { tr: "Tas Kebap", en: "Meat Stew", ar: "طاس كباب" }, cals: 420, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
       { name: { tr: "Orman Kebabı", en: "Forest Kebab", ar: "كباب الغابة" }, cals: 430, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
@@ -91,7 +91,7 @@ const menuData = [
   },
   {
     category: { tr: "Pideler", en: "Pitas", ar: "فطائر بيدا" },
-    icon: "pizza-outline",
+    icon: "icons/pide_logo.png",
     items: [
       { name: { tr: "Kaşarlı Pide", en: "Pita with Cheese", ar: "بيدا بالجبن" }, cals: 650, gluten: "var", options: [{tr:"1 P.",en:"1 P.",ar:"1 حصة"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
       { name: { tr: "Kıymalı Pide", en: "Pita with Minced Meat", ar: "بيدا باللحم المفروم" }, cals: 700, gluten: "var", options: [{tr:"1 P.",en:"1 P.",ar:"1 حصة"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
@@ -103,7 +103,7 @@ const menuData = [
   },
   {
     category: { tr: "Döner", en: "Doner", ar: "شاورما لحم" },
-    icon: "flame-outline",
+    icon: "icons/doner_logo.png",
     items: [
       { name: { tr: "Döner Dürüm", en: "Doner Wrap", ar: "ساندويتش شاورما" }, cals: 650, gluten: "var", options: [] },
       { name: { tr: "Yarım Ekmek Döner", en: "Doner in Half Bread", ar: "شاورما في نصف خبزة" }, cals: 550, gluten: "var", options: [] },
@@ -112,7 +112,7 @@ const menuData = [
   },
   {
     category: { tr: "Tatlılar", en: "Desserts", ar: "حلويات" },
-    icon: "ice-cream-outline",
+    icon: "icons/tatli_logo.png",
     items: [
       { name: { tr: "Baklava", en: "Baklava", ar: "بقلاوة" }, options: [] },
       { name: { tr: "Tel Kadayıf", en: "Shredded Pastry", ar: "كاداييف" }, cals: 420, gluten: "var", options: [] },
@@ -123,7 +123,7 @@ const menuData = [
   },
   {
     category: { tr: "İçecekler", en: "Beverages", ar: "مشروبات" },
-    icon: "water-outline",
+    icon: "icons/icecek_logo.png",
     items: [
       { name: { tr: "Kola", en: "Cola", ar: "كولا" }, cals: 139, gluten: "yok", options: [] },
       { name: { tr: "Yedigün", en: "Orange Soda", ar: "صودا برتقال" }, cals: 140, gluten: "yok", options: [] },
@@ -137,7 +137,7 @@ const menuData = [
   },
   {
     category: { tr: "Yan Ürünler", en: "Side Dishes", ar: "أطباق جانبية" },
-    icon: "leaf-outline",
+    icon: "icons/salata_logo.png",
     items: [
       { name: { tr: "Salata", en: "Salad", ar: "سلطة" }, options: [] },
       { name: { tr: "Yoğurt", en: "Yogurt", ar: "زبادي" }, options: [] },
@@ -265,6 +265,13 @@ function renderMenu() {
     
     if (!navContainer || !menuContainer) return; 
 
+    const renderCatIcon = (iconStr) => {
+        if (iconStr.includes('.')) {
+            return `<img src="Images/${iconStr}" class="custom-cat-icon" alt="icon">`;
+        }
+        return `<ion-icon name="${iconStr}"></ion-icon>`;
+    };
+
     navContainer.innerHTML = '';
     menuContainer.innerHTML = '';
 
@@ -283,7 +290,7 @@ function renderMenu() {
         
         const title = document.createElement('h2');
         title.className = 'category-title';
-        title.innerHTML = `<ion-icon name="${catData.icon}"></ion-icon> ${catName}`;
+        title.innerHTML = `${renderCatIcon(catData.icon)} ${catName}`;
         section.appendChild(title);
 
         const grid = document.createElement('div');
@@ -312,7 +319,7 @@ function renderMenu() {
                      onerror="this.style.display='none'; document.getElementById('${fallbackId}').style.display='flex';" 
                      loading="lazy">
                 <div class="item-icon-placeholder" id="${fallbackId}" style="display: none;">
-                    <ion-icon name="${catData.icon}"></ion-icon>
+                    ${renderCatIcon(catData.icon)}
                 </div>`;
 
             let badgesHTML = '';
