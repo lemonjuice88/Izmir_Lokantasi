@@ -60,11 +60,9 @@ function setLanguage(lang) {
 }
 
 function updateLanguage(lang) {
-    // Update active button state
     document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
     document.getElementById(`btn-${lang}`).classList.add('active');
 
-    // Update texts
     document.title = langData[lang].title;
     document.getElementById('t-btn-menu').textContent = langData[lang].btnMenu;
     document.getElementById('t-btn-about').textContent = langData[lang].btnAbout;

@@ -150,7 +150,7 @@ let scrollListener = null;
 
 async function loadExcelData() {
     try {
-        const response = await fetch('gercek_menu_fiyatlari.xlsx');
+        const response = await fetch('menu_prices.xlsx');
         if (!response.ok) return; 
         const arrayBuffer = await response.arrayBuffer();
         const data = new Uint8Array(arrayBuffer);
@@ -267,7 +267,7 @@ function renderMenu() {
 
     const renderCatIcon = (iconStr) => {
         if (iconStr.includes('.')) {
-            return `<img src="Images/${iconStr}" class="custom-cat-icon" alt="icon">`;
+            return `<img src="visuals/${iconStr}" class="custom-cat-icon" alt="icon">`;
         }
         return `<ion-icon name="${iconStr}"></ion-icon>`;
     };
@@ -311,7 +311,7 @@ function renderMenu() {
                 .replace(/\s+/g, '_')
                 .replace(/[^a-z0-9_]/g, '');
 
-            const imagePath = item.image || `Images/${baseName}.png`;
+            const imagePath = (item.image || `Images/${baseName}.png`).replace('Images/', 'visuals/images/');
             const fallbackId = `fallback-${index}-${itemIndex}`;
             
             let imageHTML = `
@@ -441,7 +441,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (btnEn) btnEn.addEventListener('click', () => setLanguage('en'));
     if (btnAr) btnAr.addEventListener('click', () => setLanguage('ar'));
 
-    // Excel verisini yükle, ardından arayüzü render et
     await loadExcelData();
     renderMenu();
 });
