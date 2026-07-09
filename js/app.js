@@ -66,7 +66,7 @@ const menuData = [
       { name: { tr: "Tavuk Şiş", en: "Chicken Shish", ar: "شيش طاووق" }, cals: 280, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
       { name: { tr: "Çöp Şiş", en: "Small Meat Shish", ar: "تشوب شيش (لحم صغير)" }, cals: 320, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
       { name: { tr: "Ciğer", en: "Liver Shish", ar: "شيش كبدة" }, cals: 330, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
-      { name: { tr: "Kaşarlı Kebap", en: "Kebab with Cheese", ar: "كباب بالجبن" }, cals: 450, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] },
+
       { name: { tr: "Karışık Izgara", en: "Mixed Grill", ar: "مشاوي مشكلة" }, cals: 700, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}, {tr:"1,5 P.",en:"1.5 P.",ar:"1.5 حصة"}] }
     ]
   },
@@ -77,7 +77,7 @@ const menuData = [
       { name: { tr: "Tas Kebap", en: "Meat Stew", ar: "طاس كباب" }, cals: 420, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
       { name: { tr: "Orman Kebabı", en: "Forest Kebab", ar: "كباب الغابة" }, cals: 430, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
       { name: { tr: "Sebzeli Kebap", en: "Vegetable Kebab", ar: "كباب بالخضار" }, cals: 350, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
-      { name: { tr: "Patlıcan Kebabı", en: "Eggplant Kebab", ar: "كباب بالباذنجان" }, cals: 520, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
+
       { name: { tr: "Et Sote", en: "Sautéed Meat", ar: "لحم سوتيه" }, cals: 400, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
       { name: { tr: "Kuzu Haşlama", en: "Boiled Lamb", ar: "لحم ضأن مسلوق" }, cals: 450, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
       { name: { tr: "Patlıcan Musakka", en: "Eggplant Moussaka", ar: "مسقعة باذنجان" }, cals: 430, gluten: "yok", options: [{tr:"TAM",en:"FULL",ar:"كامل"}, {tr:"AZ",en:"SMALL",ar:"صغير"}] },
@@ -114,7 +114,7 @@ const menuData = [
     category: { tr: "Tatlılar", en: "Desserts", ar: "حلويات" },
     icon: "icons/tatli_logo.png",
     items: [
-      { name: { tr: "Baklava", en: "Baklava", ar: "بقلاوة" }, options: [] },
+
       { name: { tr: "Tel Kadayıf", en: "Shredded Pastry", ar: "كاداييف" }, cals: 420, gluten: "var", options: [] },
       { name: { tr: "Ekmek Kadayıfı", en: "Bread Pastry", ar: "حلوى الخبز" }, cals: 500, gluten: "var", options: [] },
       { name: { tr: "Sütlaç", en: "Rice Pudding", ar: "مهلبية أرز" }, cals: 240, gluten: "yok", options: [] },
@@ -171,8 +171,13 @@ async function loadExcelData() {
             catName = catName.trim();
             if (categoryMap[catName]) catName = categoryMap[catName];
 
-            const itemName = row['Ürün Adı'] ? String(row['Ürün Adı']).trim() : '';
-            if (!itemName) return;
+            const itemMap = {
+                "M. Suyu": "Meyve Suyu",
+                "M.Suyu": "Meyve Suyu"
+            };
+            const rawItemName = row['Ürün Adı'] ? String(row['Ürün Adı']).trim() : '';
+            if (!rawItemName) return;
+            const itemName = itemMap[rawItemName] || rawItemName;
 
             const cal = String(row['Kalori'] || '').trim();
             const gluten = String(row['Gluten'] || '').trim();

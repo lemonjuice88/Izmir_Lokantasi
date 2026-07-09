@@ -10,6 +10,15 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <script>
+        window.onerror = function(msg, url, line) {
+            document.body.innerHTML += '<div style="color:red; font-size: 18px; padding: 20px; z-index: 9999; position: fixed; top: 100px; background: white;">ERROR: ' + msg + '<br>Line: ' + line + '</div>';
+            return false;
+        };
+        window.addEventListener('unhandledrejection', function(event) {
+            document.body.innerHTML += '<div style="color:red; font-size: 18px; padding: 20px; z-index: 9999; position: fixed; top: 100px; background: white;">PROMISE REJECTION: ' + (event.reason ? event.reason.toString() : 'Unknown') + '</div>';
+        });
+    </script>
 </head>
 <body>
     <div class="lang-switch">
